@@ -1,0 +1,15 @@
+-- Query 1
+SELECT description FROM product;
+-- Query 2
+SELECT DISTINCT city FROM customer;
+-- Query 3
+SELECT * FROM agent ORDER BY city;
+-- Query 4
+SELECT firstname,lastname FROM customer WHERE city="Springfield";
+-- Query 5
+SELECT lastname FROM customer,agent WHERE customer.agentID=agent.agentID and agent.firstname="Regis";
+-- Query 6
+SELECT description FROM product WHERE description LIKE "%pad%";
+// union with ~~~!~!~!~!~!~!~!~!~!~!~!~!~!~!~!~!~@!$#@TTGDSFWRs
+SELECT description FROM product WHERE description LIKE "%Pad%";
+-- Query 7
