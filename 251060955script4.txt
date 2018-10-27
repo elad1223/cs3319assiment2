@@ -1,0 +1,28 @@
+USE 251060955assign2db;
+
+-- Show all dat in tables;
+SELECT * FROM product;
+SELECT * FROM customer;
+SELECT * FROM agent;
+SELECT * FROM purchase;
+
+-- Create view
+CREATE VIEW file4View AS SELECT firstname,lastname,description,purchase.quantity
+AS quantity,cost, cost * purchase.quantity AS "Total cost" FROM product,customer,purchase WHERE customer.customerID = purchase.customerID AND
+product.productID = purchase.productID ORDER BY lastname; 
+
+-- show view
+SELECT * FROM file4View;
+
+-- show view spent more than 100
+SELECT * FROM file4View WHERE quantity*cost > 100;
+
+-- Delete my product (I have put them from 67 to 70)
+DELETE FROM product WHERE productID >66 AND productID <71;
+
+-- Show delete worked
+SELECT * FROM product;
+
+DELETE FROM agent WHERE city = "Springfield";
+-- there is only one agent from Springfield therefore
+-- The row for Huge Grant was not deleted because he is an agent for 3 more poeple in customer agentID.

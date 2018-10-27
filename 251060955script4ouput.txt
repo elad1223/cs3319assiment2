@@ -1,0 +1,74 @@
+Warning: Using a password on the command line interface can be insecure.
+ERROR 1064 (42000) at line 18: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+--------------
+SELECT * FROM product
+--------------
+
+productID	description	cost	quantity
+11	Bike	150	200
+12	Socks	2	100
+66	Elbow pads	14.25	120
+67	My hats	25	1
+68	My scarff	15	2
+69	My coat	150	2
+70	My jacket	30	8
+78	Knee Pads	12.15	70
+88	Roller Blades	75	89
+99	Helmet	29	30
+--------------
+SELECT * FROM customer
+--------------
+
+customerID	firstname	lastname	city	phoneNumber	agentID
+10	Barney	Rubble	Bedrock	7771234	NULL
+12	Monty	Simpson	Springfield	7890000	99
+13	Wonder	Woman	Kypto	8881234	33
+14	Peter	Griffens	Providence	9874567	99
+15	Fred	Simpson	Boston	7772345	11
+21	Homer	Simpson	Boston	6868956	11
+31	Sideshow	Bob	Springfield	6865555	12
+--------------
+SELECT * FROM agent
+--------------
+
+agentID	firstname	lastname	city	commissioPercent
+11	Regis	Philbin	Boston	33
+12	Rosie	Cox	Ottawa	50
+22	Courtney	Cox	New York	25
+33	David	Letterman	Bedrock	100
+66	Rosie	ODonnell	Ottawa	100
+99	Hugh	Grant	Springfield	16
+100	Elad	Gershon	Jeruslem	100
+--------------
+SELECT * FROM purchase
+--------------
+
+customerID	productID	quantity
+21	99	20
+21	12	14
+21	66	10
+31	99	5
+31	12	5
+31	78	5
+31	66	5
+15	66	2
+15	78	2
+14	66	19
+--------------
+CREATE VIEW file4View AS SELECT firstname,lastname,description,purchase.quantity
+AS quantity,cost, cost * purchase.quantity AS "Total cost" FROM product,customer,purchase WHERE customer.customerID = purchase.customerID AND
+product.productID = purchase.productID GROUP BY lastname
+--------------
+
+--------------
+SELECT * FROM file4View
+--------------
+
+firstname	lastname	description	quantity	cost	Total cost
+Sideshow	Bob	Helmet	5	29	145
+Peter	Griffens	Elbow pads	19	14.25	270.75
+Fred	Simpson	Elbow pads	2	14.25	28.5
+--------------
+SELECT * FROM file4View WHERE
+--------------
+
