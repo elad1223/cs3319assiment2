@@ -1,0 +1,69 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SHOW DATABASES
+--------------
+
+Database
+information_schema
+251060955assign2db
+myfirstDB
+mysql
+performance_schema
+practice
+--------------
+DROP DATABASE IF EXISTS 251060955assign2db
+--------------
+
+--------------
+CREATE DATABASE 251060955assign2db
+--------------
+
+--------------
+GRANT USAGE ON *.* TO 'ta'@'localhost'
+--------------
+
+--------------
+DROP USER 'ta'@'localhost'
+--------------
+
+--------------
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319'
+--------------
+
+--------------
+GRANT ALL PRIVILEGES ON 251060955assign2db.* TO 'ta'@'localhost'
+--------------
+
+--------------
+FLUSH PRIVILEGES
+--------------
+
+--------------
+SHOW TABLES
+--------------
+
+--------------
+CREATE TABLE product(productID INT NOT NULL,description VARCHAR(20),cost FLOAT,quantity INT,PRIMARY KEY(productID))
+--------------
+
+--------------
+CREATE TABLE agent(agentID INT NOT NULL,firstname VARCHAR(30),lastname VARCHAR(30),city VARCHAR(15),commissioPercent INT,PRIMARY KEY(agentID))
+--------------
+
+--------------
+CREATE TABLE customer(customerID INT NOT NULL,firstname VARCHAR(30),lastname VARCHAR(30), city VARCHAR(15),phoneNumber INT,agentID INT,PRIMARY KEY(customerID),FOREIGN KEY(agentID) REFERENCES agent(agentID))
+--------------
+
+--------------
+CREATE TABLE purchase(customerID INT NOT NULL,productID INT NOT NULL, quantity INT,FOREIGN KEY(customerID) REFERENCES customer(customerID),FOREIGN KEY(productID) REFERENCES product(productID))
+--------------
+
+--------------
+SHOW TABLES
+--------------
+
+Tables_in_251060955assign2db
+agent
+customer
+product
+purchase

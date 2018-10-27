@@ -1,8 +1,8 @@
-
 -- load local data
-LOAD DATA LOCAL INFILE
+USE 251060955assign2db
+LOAD DATA LOCAL INFILE "loaddatafall2018.txt" INTO TABLE product;
 
-SELECT * FROM product
+SELECT * FROM product;
 
 -- insert into product
 
@@ -12,7 +12,7 @@ INSERT INTO product VALUES(68,"My scarff",15,2);
 INSERT INTO product VALUES(69,"My coat",150,2);
 INSERT INTO product VALUES(70,"My jacket",30,8);
 
---insert into agents
+-- insert into agents
 
 INSERT INTO agent VALUES(99,"Hugh","Grant","Springfield",16);
 INSERT INTO agent VALUES(22,"Courtney","Cox","New York",25);
@@ -21,7 +21,7 @@ INSERT INTO agent VALUES(33,"David","Letterman","Bedrock",100);
 INSERT INTO agent VALUES(11,"Regis","Philbin","Boston",33);
 INSERT INTO agent VALUES(12,"Rosie","Cox","Ottawa",50);
 
---my agent
+-- my agent
 INSERT INTO agent VALUES(100,"Elad","Gershon","Jeruslem",100);
 
 
@@ -35,7 +35,7 @@ INSERT INTO customer VALUES(13,"Super","Man","Kypto",8881234,NULL);
 INSERT INTO customer VALUES(10,"Barney","Rubble","Bedrock",7771234,NULL);
 INSERT INTO customer VALUES(14,"Peter","Griffens","Providence",9874567,NULL);
 
---inset into pruchase table all data
+-- inset into pruchase table all data
 
 INSERT INTO purchase VALUES(21,99,20);
 INSERT INTO purchase VALUES(21,12,14);
@@ -48,7 +48,7 @@ INSERT INTO purchase VALUES(15,66,2);
 INSERT INTO purchase VALUES(15,78,2);
 INSERT INTO purchase VALUES(14,66,19);
 
---update agent customer info
+-- update agent customer info
 
 UPDATE customer SET agentID=99 WHERE customerID=21;
 UPDATE customer SET agentID=99 WHERE customerID=12;
@@ -62,17 +62,17 @@ UPDATE customer SET agentID=11 WHERE customerID=15;
 UPDATE customer SET agentID=12 WHERE customerID=31;
 
 
---show all data
+-- show all data
 SELECT * FROM product;
 SELECT * FROM agent;
-SELECT * FROM costumer;
+SELECT * FROM customer;
 SELECT * FROM purchase;
 
---change name and data
+-- change name and data
 UPDATE customer SET firstname="Wonder",lastname="Woman" WHERE firstname="Super" and lastname="Man";
-UPDATE purchase SET quantity=5 WHERE costumerID IN (SELECT costumerID FROM costumer WHERE firstname="Sideshow") ;
+UPDATE purchase SET quantity=5 WHERE customerID IN (SELECT customerID FROM customer WHERE firstname="Sideshow") ;
 UPDATE customer SET city="Boston" WHERE agentID IN (SELECT agentID FROM agent WHERE firstname="Regis");
 
---show all change data
-SELECT * FROM costumer;
+-- show all change data
+SELECT * FROM customer;
 SELECT * FROM purchase;

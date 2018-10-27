@@ -1,3 +1,5 @@
+USE 251060955assign2db
+
 -- Query 1
 SELECT description FROM product;
 -- Query 2
@@ -7,9 +9,38 @@ SELECT * FROM agent ORDER BY city;
 -- Query 4
 SELECT firstname,lastname FROM customer WHERE city="Springfield";
 -- Query 5
-SELECT lastname FROM customer,agent WHERE customer.agentID=agent.agentID and agent.firstname="Regis";
+SELECT customer.lastname as LastName FROM customer,agent WHERE customer.agentID=agent.agentID AND agent.firstname="Regis";
 -- Query 6
-SELECT description FROM product WHERE description LIKE "%pad%";
-// union with ~~~!~!~!~!~!~!~!~!~!~!~!~!~!~!~!~!~@!$#@TTGDSFWRs
+SELECT description FROM product WHERE description LIKE "%pad%"
+UNION
 SELECT description FROM product WHERE description LIKE "%Pad%";
 -- Query 7
+SELECT lastname,description,purchase.quantity AS quantity FROM customer,product,purchase WHERE
+ customer.customerID=purchase.customerID AND purchase.productID=product.productID;
+-- Query 8
+SELECT COUNT(*) AS "Homer's Total Purchases"FROM purchase,customer WHERE 
+purchase.customerID=customer.customerID AND customer.firstname="Homer";
+-- Query 9
+SELECT firstname,lastname,COUNT(purchase.quantity) FROM customer,purchase WHERE
+purchase.customerID=customer.customerID GROUP BY firstname;
+-- Query 10
+SELECT DISTINCT description,product.quantity AS quantity FROM product,purchase WHERE
+product.productID NOT IN (Select productID from purchase);
+-- Query 11
+SELECT DISTINCT description,product.quantity AS quantity FROM product,purchase WHERE
+product.productID NOT IN (SELECT productID from purchase,customer WHERE
+ customer.customerID=purchase.customerID AND customer.firstname = "Fred" AND customer.lastname= "Flintstone" );
+-- Query 12
+SELECT customer.firstname,customer.lastname,agent.firstname,agent.lastname FROM agent,customer WHERE
+agent.city=customer.city;
+-- Query 13
+SELECT COUNT(*) AS "Nice title :D" FROM purchase,customer,product
+ WHERE customer.firstname="Elad" AND customer.lastname="Gershon" AND
+ product.description="Knee Pads" AND product.productID=purchase.productID AND purchase.customerID=customer.customerID;
+-- Query 14
+SELECT description FROM product,purchase WHERE
+ product.productID=purchase.productID HAVING COUNT(product.productID) > 3;
+-- Query 15
+SELECT agent.firstname AS "First Name",agent.lastname AS "Last Name" FROM agent,customer WHERE
+agent.agentID=customer.agentID AND customer.customerID IN (SELECT customerID FROM purchase,product WHERE
+purchase.productID=product.productID AND product.description="Knee Pads");

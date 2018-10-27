@@ -1,0 +1,158 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SELECT description FROM product
+--------------
+
+description
+Bike
+Socks
+Elbow pads
+My hats
+My scarff
+My coat
+My jacket
+Knee Pads
+Roller Blades
+Helmet
+--------------
+SELECT DISTINCT city FROM customer
+--------------
+
+city
+Bedrock
+Springfield
+Kypto
+Providence
+Boston
+--------------
+SELECT * FROM agent ORDER BY city
+--------------
+
+agentID	firstname	lastname	city	commissioPercent
+33	David	Letterman	Bedrock	100
+11	Regis	Philbin	Boston	33
+100	Elad	Gershon	Jeruslem	100
+22	Courtney	Cox	New York	25
+12	Rosie	Cox	Ottawa	50
+66	Rosie	ODonnell	Ottawa	100
+99	Hugh	Grant	Springfield	16
+--------------
+SELECT firstname,lastname FROM customer WHERE city="Springfield"
+--------------
+
+firstname	lastname
+Monty	Simpson
+Sideshow	Bob
+--------------
+SELECT customer.lastname as LastName FROM customer,agent WHERE customer.agentID=agent.agentID AND agent.firstname="Regis"
+--------------
+
+LastName
+Simpson
+Simpson
+--------------
+SELECT description FROM product WHERE description LIKE "%pad%"
+UNION
+SELECT description FROM product WHERE description LIKE "%Pad%"
+--------------
+
+description
+Elbow pads
+Knee Pads
+--------------
+SELECT lastname,description,purchase.quantity AS quantity FROM customer,product,purchase WHERE
+ customer.customerID=purchase.customerID AND purchase.productID=product.productID
+--------------
+
+lastname	description	quantity
+Griffens	Elbow pads	19
+Simpson	Elbow pads	2
+Simpson	Knee Pads	2
+Simpson	Helmet	20
+Simpson	Socks	14
+Simpson	Elbow pads	10
+Bob	Helmet	5
+Bob	Socks	5
+Bob	Knee Pads	5
+Bob	Elbow pads	5
+--------------
+SELECT COUNT(*) AS "Homer's Total Purchases"FROM purchase,customer WHERE 
+purchase.customerID=customer.customerID AND customer.firstname="Homer"
+--------------
+
+Homer's Total Purchases
+3
+--------------
+SELECT firstname,lastname,COUNT(purchase.quantity) FROM customer,purchase WHERE
+purchase.customerID=customer.customerID GROUP BY firstname
+--------------
+
+firstname	lastname	COUNT(purchase.quantity)
+Fred	Simpson	2
+Homer	Simpson	3
+Peter	Griffens	1
+Sideshow	Bob	4
+--------------
+SELECT DISTINCT description,product.quantity AS quantity FROM product,purchase WHERE
+product.productID NOT IN (Select productID from purchase)
+--------------
+
+description	quantity
+Bike	200
+My hats	1
+My scarff	2
+My coat	2
+My jacket	8
+Roller Blades	89
+--------------
+SELECT DISTINCT description,product.quantity AS quantity FROM product,purchase WHERE
+product.productID NOT IN (SELECT productID from purchase,customer WHERE
+ customer.customerID=purchase.customerID AND customer.firstname = "Fred" AND customer.lastname= "Flintstone" )
+--------------
+
+description	quantity
+Bike	200
+Socks	100
+Elbow pads	120
+My hats	1
+My scarff	2
+My coat	2
+My jacket	8
+Knee Pads	70
+Roller Blades	89
+Helmet	30
+--------------
+SELECT customer.firstname,customer.lastname,agent.firstname,agent.lastname FROM agent,customer WHERE
+agent.city=customer.city
+--------------
+
+firstname	lastname	firstname	lastname
+Barney	Rubble	David	Letterman
+Monty	Simpson	Hugh	Grant
+Fred	Simpson	Regis	Philbin
+Homer	Simpson	Regis	Philbin
+Sideshow	Bob	Hugh	Grant
+--------------
+SELECT COUNT(*) AS "Nice title :D" FROM purchase,customer,product
+ WHERE customer.firstname="Elad" AND customer.lastname="Gershon" AND
+ product.description="Knee Pads" AND product.productID=purchase.productID AND purchase.customerID=customer.customerID
+--------------
+
+Nice title :D
+0
+--------------
+SELECT description FROM product,purchase WHERE
+ product.productID=purchase.productID HAVING COUNT(product.productID) > 3
+--------------
+
+description
+Socks
+--------------
+SELECT agent.firstname AS "First Name",agent.lastname AS "Last Name" FROM agent,customer WHERE
+agent.agentID=customer.agentID AND customer.customerID IN (SELECT customerID FROM purchase,product WHERE
+purchase.productID=product.productID AND product.description="Knee Pads")
+--------------
+
+First Name	Last Name
+Regis	Philbin
+Rosie	Cox
